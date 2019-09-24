@@ -1,0 +1,7 @@
+
+            Bonjour {{ nom }} {{ prenom }},
+            Pour vos {{ age }} ans, nous vous souhaitons un joyeux anniversaire.
+            Cordialement,
+            
+            SFR
+            
