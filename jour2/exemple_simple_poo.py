@@ -30,6 +30,13 @@ class Personne:
         print(f"Bonjour {autre_personne}")
         print(f"Je m'appelle {self.nom}")
     
+    def envoyer_mail_anniversaire(self):
+        """
+            afficher le contenu de template_mail.txt
+            en remplaçant {{ nom }} par self.nom etc...
+        """
+        text = "Bonjour"
+        text = text.replace("on", "au")
     def __repr__(self):
         return self.nom
 
