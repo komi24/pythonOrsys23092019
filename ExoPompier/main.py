@@ -22,14 +22,22 @@ class Pompier:
             On éteint le feu et is_busy devient nul
             appeler self.manager.eteindre(feu)
         """
-        if self.position[0] < destination.position[0]:
-            self.position[0] += 1
-        elif self.position[0] > destination.position[0]:
-            self.position[0] -= 1
-        elif self.position[1] < destination.position[1]:
-            self.position[1] += 1
-        elif self.position[1] > destination.position[1]:
-            self.position[1] -= 1
+        if self.is_busy == 0:
+            if self.position[0] < destination.position[0]:
+                self.position[0] += 1
+            elif self.position[0] > destination.position[0]:
+                self.position[0] -= 1
+            elif self.position[1] < destination.position[1]:
+                self.position[1] += 1
+            elif self.position[1] > destination.position[1]:
+                self.position[1] -= 1
+            else:
+                self.is_busy = 5
+        elif self.is_busy > 0:
+            self.is_busy -= 1
+            print(self.is_busy)
+            if self.is_busy == 0:
+                self.manager.eteindre(destination)
      
 class Feu:
     """
@@ -51,7 +59,7 @@ class Manager:
         """
             Retirer le feu de la liste des feux
         """
-        pass
+        self.liste_feux.remove(feu)
     def run(self):
         """
             Fait avancer les pompiers d'une case
@@ -64,7 +72,8 @@ class Manager:
 
 
 manager = Manager()
-for i in range(10):
+for i in range(20):
     manager.run()
-
+    
+    
 
