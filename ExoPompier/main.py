@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+import os
 
+SIZE = 20
 
 class Pompier:
-    def __init__(self, position_init, manager):
+    def __init__(self, manager):
         """
             position
             is_busy
         """
-        self.position = position_init
+        self.position = np.random.randint(0,SIZE,2)
         self.is_busy = 0
         self.manager = manager
         
@@ -35,18 +37,22 @@ class Pompier:
                 self.position[1] -= 1
             else:
                 self.is_busy = 5
+                self.manager.eteindre(destination)
         elif self.is_busy > 0:
             self.is_busy -= 1
             print(self.is_busy)
-            if self.is_busy == 0:
-                self.manager.eteindre(destination)
+                
+    def __repr__(self):
+        return str(self.position)
      
 class Feu:
     """
         position
     """
-    def __init__(self, position_init):
-        self.position = position_init
+    def __init__(self):
+        self.position = np.random.randint(0,SIZE,2)
+    def __repr__(self):
+        return str(self.position)
 
 class Manager:
     """
@@ -54,8 +60,8 @@ class Manager:
         liste_pompiers
     """
     def __init__(self):
-        self.liste_feux = [Feu([3,2]), Feu([6,7])] #[14,2,7]
-        self.liste_pompiers = [Pompier([1,1], self)] #[14,2,7]
+        self.liste_feux = [Feu() for i in range(8)] #[14,2,7]
+        self.liste_pompiers = [Pompier(self) for i in range(3)] #[14,2,7]
         
     def eteindre(self, feu):
         """
@@ -83,6 +89,31 @@ class Manager:
                 feu_proche = feu
         return feu_proche
     
+    def display(self):
+        os.system('cls')
+        for i in range(SIZE+1):
+            ligne = []
+            for j in range(SIZE+1):
+                if self.is_feu([i,j]):
+                    ligne.append('x')
+                elif self.is_pompier([i,j]):
+                    ligne.append('o')
+                else:
+                    ligne.append(' ')
+            print(''.join(ligne))
+
+    def is_feu(self, position):
+        for feu in self.liste_feux:
+            if (feu.position == position).all():
+                return True
+        return False
+
+    def is_pompier(self, position):
+        for pompier in self.liste_pompiers:
+            if (pompier.position == position).all():
+                return True
+        return False
+    
     def run(self):
         """
             Fait avancer les pompiers d'une case
@@ -90,14 +121,17 @@ class Manager:
         """
         for pompier in self.liste_pompiers:
             pompier.avancer_vers(self.feu_le_plus_proche(pompier))
-        print("pompier", self.liste_pompiers[0].position)
-        print("feu", self.liste_feux[0].position)
+        print("pompier", self.liste_pompiers)
+        print("feu", self.liste_feux)
+        self.display()
 
 
+from time import sleep
 
 manager = Manager()
-for i in range(20):
+for i in range(30):
     manager.run()
+    sleep(1)
     
     
 
