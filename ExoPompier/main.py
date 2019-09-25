@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import numpy as np
+
 
 class Pompier:
     def __init__(self, position_init, manager):
@@ -60,12 +62,34 @@ class Manager:
             Retirer le feu de la liste des feux
         """
         self.liste_feux.remove(feu)
+        
+    def feu_le_plus_proche(self, pompier):
+        """
+            renvoie le feu le plus proche du pompier
+        """
+        feu_proche = self.liste_feux[0]
+        distance_min = np.linalg.norm(
+                    np.array(pompier.position)
+                    -np.array(feu_proche.position)
+                    )
+        
+        for feu in self.liste_feux:
+            distance = np.linalg.norm(
+                    np.array(pompier.position)
+                    -np.array(feu.position)
+                    )
+            if distance < distance_min:
+                distance_min = distance
+                feu_proche = feu
+        return feu_proche
+    
     def run(self):
         """
             Fait avancer les pompiers d'une case
             vers le feux le plus proche
         """
-        self.liste_pompiers[0].avancer_vers(self.liste_feux[0])
+        for pompier in self.liste_pompiers:
+            pompier.avancer_vers(self.feu_le_plus_proche(pompier))
         print("pompier", self.liste_pompiers[0].position)
         print("feu", self.liste_feux[0].position)
 
