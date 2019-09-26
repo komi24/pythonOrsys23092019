@@ -80,6 +80,8 @@ class Manager:
         """
             renvoie le feu le plus proche du pompier
         """
+        if len(self.liste_feux) == 0:
+            return Feu()
         feu_proche = self.liste_feux[0]
         distance_min = np.linalg.norm(
                     np.array(pompier.position)
@@ -142,11 +144,12 @@ class Manager:
             Fait avancer les pompiers d'une case
             vers le feux le plus proche
         """
-        for pompier in self.liste_pompiers:
-            pompier.avancer_vers(self.feu_le_plus_proche(pompier))
-        print("pompier", self.liste_pompiers)
-        print("feu", self.liste_feux)
-        self.displayUI()
+        if len(self.liste_feux):
+            for pompier in self.liste_pompiers:
+                pompier.avancer_vers(self.feu_le_plus_proche(pompier))
+            print("pompier", self.liste_pompiers)
+            print("feu", self.liste_feux)
+            self.displayUI()
 
 
 from time import sleep
