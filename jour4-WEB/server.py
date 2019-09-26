@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__,
             static_folder="public",
@@ -6,11 +6,11 @@ app = Flask(__name__,
 
 
 liste_personnes = [
-    {"nom": "Dupont", "prenom": "Mylenne", "age": 42},
-    {"nom": "Durand", "prenom": "Mathias", "age": 24},
-    {"nom": "Dumont", "prenom": "Melanie", "age": 36},
-    {"nom": "Dulard", "prenom": "Maud", "age": 38},
-    {"nom": "Dulay", "prenom": "Romain", "age": 31}
+    {"nom": "Dupont", "prenom": "Mylenne", "age": 42, "pic": "pers1.jpg"},
+    {"nom": "Durand", "prenom": "Mathias", "age": 24, "pic": "pers2.jpg"},
+    {"nom": "Dumont", "prenom": "Melanie", "age": 36, "pic": "pers1.jpg"},
+    {"nom": "Dulard", "prenom": "Maud", "age": 38, "pic": "pers2.jpg"},
+    {"nom": "Dulay", "prenom": "Romain", "age": 31, "pic": "pers1.jpg"}
 ]
 
 
@@ -19,6 +19,19 @@ def index():
     return render_template(
         "index.html",
         liste_eleves=liste_personnes)
+
+
+@app.route("/ajoute_eleve")
+def add_student():
+    return render_template(
+        "form.html")
+
+
+@app.route("/api/personne", methods=["POST"])
+def add_student_post():
+    print(request.form.get("nom"))
+    return render_template(
+        "form.html")
 
 
 app.run(port=8080, debug=True)

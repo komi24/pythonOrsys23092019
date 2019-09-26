@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Cours Python</title>
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Python</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>Ajouter une personne</h1>
+  </div>
+  <div class="row">
+    <form class="col s12" action="/api/personne" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="prenom" placeholder="Placeholder" id="first_name" type="text" class="validate">
+          <label for="first_name">Prenom</label>
+        </div>
+        <div class="input-field col s6">
+          <input name="nom" id="last_name" type="text" class="validate">
+          <label for="last_name">Nom</label>
+        </div>
+        <button class="btn" type="submit">Valider</button>
+      </div>
+    </form>
+</body>
+</html>
