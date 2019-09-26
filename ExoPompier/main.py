@@ -114,6 +114,9 @@ class Manager:
                 return True
         return False
     
+    def displayUI(self):
+        self.canvas.after(200, self.run)
+        
     def run(self):
         """
             Fait avancer les pompiers d'une case
@@ -123,15 +126,20 @@ class Manager:
             pompier.avancer_vers(self.feu_le_plus_proche(pompier))
         print("pompier", self.liste_pompiers)
         print("feu", self.liste_feux)
-        self.display()
+        self.displayUI()
 
 
 from time import sleep
 
 manager = Manager()
-for i in range(30):
-    manager.run()
-    sleep(1)
+
+manager.run()
+manager.fen.mainloop()
+
+
+#for i in range(30):
+#    manager.run()
+#    sleep(1)
     
     
 
