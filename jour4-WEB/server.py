@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__,
             static_folder="public",
@@ -29,9 +29,13 @@ def add_student():
 
 @app.route("/api/personne", methods=["POST"])
 def add_student_post():
-    print(request.form.get("nom"))
-    return render_template(
-        "form.html")
+    liste_personnes.append({
+        "nom": request.form.get("nom"),
+        "prenom": request.form.get("prenom"),
+        "age": 32,
+        "pic": "pers1.jpg"
+    })
+    return redirect("/")
 
 
 app.run(port=8080, debug=True)
