@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import os
+from tkinter import Tk, Canvas, PhotoImage
 
-SIZE = 20
+SIZE = 10
 
 class Pompier:
     def __init__(self, manager):
@@ -63,6 +64,12 @@ class Manager:
         self.liste_feux = [Feu() for i in range(8)] #[14,2,7]
         self.liste_pompiers = [Pompier(self) for i in range(3)] #[14,2,7]
         
+        self.fen = Tk()
+        self.canvas = Canvas(self.fen, width=(SIZE+1)*64, height=(SIZE+1)*64)
+        self.canvas.pack()
+        self.image_pompier = PhotoImage(file="pomp.png")
+        self.image_feu = PhotoImage(file="feu.png")
+        
     def eteindre(self, feu):
         """
             Retirer le feu de la liste des feux
@@ -115,6 +122,19 @@ class Manager:
         return False
     
     def displayUI(self):
+        self.canvas.delete("all")
+        for pompier in self.liste_pompiers:
+            self.canvas.create_image(
+                    pompier.position[0] * 64 + 32,
+                    pompier.position[1] * 64 + 32,
+                    image=self.image_pompier
+                    )
+        for feu in self.liste_feux:
+            self.canvas.create_image(
+                    feu.position[0] * 64 + 32,
+                    feu.position[1] * 64 + 32,
+                    image=self.image_feu
+                    )
         self.canvas.after(200, self.run)
         
     def run(self):
