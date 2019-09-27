@@ -62,7 +62,61 @@ df[df["Survived"] == 1]["Age"].hist(bins=15)
 # In[51]:
 
 
+
 df[df["Survived"] == 0]["Age"].hist(bins=15)
+
+
+# In[57]:
+
+
+import re
+
+def extract_title(name):
+    return re.findall("\w+\.", name)[0]
+
+df["Title"] = df['Name'].map(extract_title)
+print(df["Embarked"].unique())
+print(df["Title"].unique())
+
+
+# In[58]:
+
+
+dataset = df[["Survived", "Pclass", "Age", "SibSp", "Parch", "Fare"]]
+
+dataset["Sex"] = df["Sex"].map({"male": 0, "female": 1})
+dataset["Embarked"] = df["Embarked"].map({"S": 0, "C": 1, "Q": 2})
+
+
+# In[70]:
+
+
+dataset.count()
+list_title = list(df["Title"].unique())
+
+dataset["Title"] = df["Title"].map(lambda x: list_title.index(x) )
+
+clean_data = dataset.dropna()
+
+
+# In[71]:
+
+
+clean_data
+
+
+# In[73]:
+
+
+from sklearn.neighbors import KNeighborsClassifier
+
+knn = KNeighborsClassifier(n_neighbors=5).fit(
+    clean_data[:100].drop(columns="Survived"),
+    clean_data[:100]["Survived"])
+
+score = knn.score(clean_data[100:200].drop(columns="Survived"),
+    clean_data[100:200]["Survived"])
+print(score)
 
 
 # In[ ]:
