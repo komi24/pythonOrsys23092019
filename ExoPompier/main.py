@@ -137,7 +137,7 @@ class Manager:
                     feu.position[1] * 64 + 32,
                     image=self.image_feu
                     )
-        self.canvas.after(200, self.run)
+        self.canvas.after(800, self.run)
         
     def run(self):
         """

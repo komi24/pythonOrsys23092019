@@ -41,8 +41,19 @@ class Voiture:
         
     def tourner(self):
         self.direction = np.array([[0,-1],[1,0]]).dot(self.direction)
-        
+
+def addition(a,b):
+    """
+        :Example:
+        >>> addition(2,4)
+        6
+    """
+    return a + b
+
+#print(__name__)
 if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
     ma_voiture = Voiture([2,3], 'bleue')
     print(ma_voiture.position)
     for i in range(20):
